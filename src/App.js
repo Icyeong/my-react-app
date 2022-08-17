@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Discussions from './component/Discussions';
+import Form from './component/Form';
 
 function App() {
+
+  const [discussions, setDiscussions] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/discussions')
+      .then((res) => res.json())
+      .then((data) => {
+        setDiscussions(data)
+      })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <h1>My Agora States</h1>
+      <Form />
+      <Discussions discussions={discussions} />
+    </main>
   );
 }
 
